@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+
+
+
+\lstdefinestyle{CStyle}{
+	language=C,
+	backgroundcolor=\color{lightgray},   % 背景颜色
+	basicstyle=\ttfamily\footnotesize,    % 基本字体
+	keywordstyle=\color{blue},            % 关键字颜色
+	commentstyle=\color{green!70!black},  % 注释颜色
+	stringstyle=\color{red},               % 字符串颜色
+	numbers=left,                         % 行号位置
+	numberstyle=\tiny\color{gray},        % 行号样式
+	stepnumber=1,                         % 行号步长
+	numbersep=5pt,                        % 行号与代码间距
+	tabsize=4,                            % 制表符宽度
+	breaklines=true,                      % 自动换行
+	showspaces=false,                     % 不显示空格
+	showstringspaces=false,               % 不显示字符串中的空格
+	escapeinside={(*@}{@*)}               % 自定义转义
+}
+\title{1.6.8 Exercises for Section 1.6}
+\begin{document}
+\maketitle
+\section{Exercise 1.6.1}
+For the block-structured C code of Fig. 1.13(a), indicate the values assigned to w, x, y and z.
+\begin{lstlisting}[style=CStyle]
+	int w, x, y, z;
+	int i = 4; int j = 5;
+	{ int j = 7;
+	  i = 6;
+	  w = i + j;
+    }
+    x = i + j;
+    {  int i = 8;
+       y = i + j;
+    }
+    z = i + j;
+\end{lstlisting}
+\subsection{answer:}
+\begin{enumerate}
+	\item w is assigned to 13
+	\item x is assigned to 9
+	\item y is assigned to 13
+	\item z is assigned to 9
+\end{enumerate}
+
+\newpage
+\section{Exercise 1.6.2}
+Repeat Exercise 1.6.1 for the code of Fig. 1.13(b)
+\begin{lstlisting}[style=CStyle]
+	int w, x, y, z;
+	int i = 3; int j = 4;
+	{	int i = 5;
+		w = i + j;
+	}
+	x = i + j;
+	{	int j = 6;
+		i = 7;
+		y = i + j;
+	}
+	z = i + j;
+\end{lstlisting}
+
+\subsection{Answer:}
+\begin{enumerate}
+	\item w is assigned 9
+	\item x is assigned 7
+	\item y is assigned 13
+	\item z is assigned 11
+\end{enumerate}
+
+\newpage
+\section{Exercise 1.6.3}
+For the block-structured code of Fig.1.14, assuming the usual static scoping of declarations, give the scope for each twelve declarations.
+\begin{lstlisting}[style=CStyle]
+	{	int w, x, y, z;		/* Block B1 */
+		{	int x, z;		/* Block B2 */
+			{	int w, z;	/* Block B3 */}
+		}
+		{	int w, x;		/* Block B4 */
+			{  int y, z		/* Block B5 */ }
+		}
+	}
+\end{lstlisting}
+\subsection{Answer:}
+\begin{enumerate}
+	\item w(B1):B1, B2
+	\item x(B1):B1
+	\item y(B1):B1, B2, B3, B4
+	\item z(B1):B1, B4
+	\item x(B2):B2, B3
+	\item z(B2):B2
+	\item w(B3):B3
+	\item z(B3):B3
+	\item w(B4):B4, B5
+	\item x(B4):B4, B5
+	\item y(B5):B5
+	\item z(B5):B5
+	
+\end{enumerate}
+
+\section{Exercise 1.6.4}
+What is printed by the following C code?
+\begin{lstlisting}[style=CStyle]
+#define	a	(x+1)
+int x = 2;
+void b() { x = a; printf("%d\n", x); }
+void c() { int x = 1; printf("%d\n", a)}
+void main() { b(); c();}
+\end{lstlisting}
+\subsection{Answer:}
+3\newline
+1
+\end{document}
